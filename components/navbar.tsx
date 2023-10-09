@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import MainNav from "@/components/main-nav";
+import MainNav from "@/components/ui/main-nav";
 import Container from "@/components/ui/container";
-import NavbarActions from "@/components/navbar-actions";
+import NavbarActions from "@/components/ui/navbar-actions";
 import getCategories from "@/actions/get-categories";
 
 
