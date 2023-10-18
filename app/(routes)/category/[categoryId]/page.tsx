@@ -1,14 +1,18 @@
 // CategoryId page is the page rendered when user requests for a specifical category info and items 
 
+// useful functions import 
 import getCategory from "@/actions/get-category";
 import getColors from "@/actions/get-colors";
 import getProducts from "@/actions/get-products";
 import getSizes from "@/actions/get-sizes";
+
+// Useful components import 
 import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
 import Filter from "./components/filter";
 import ProductCard from "@/components/ui/product/product-card";
 import NoResults from "@/components/ui/no-results";
+import MobileFilters from "./components/mobile-filters";
 
 export const revalidate = 0;
 
@@ -31,7 +35,6 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params, searchParams 
         colorId: searchParams.colorId,
         sizeId: searchParams.sizeId,
     });
-
     const category = await getCategory(params.categoryId);
     const sizes = await getSizes();
     const colors = await getColors();
@@ -43,7 +46,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params, searchParams 
                 <Billboard data={category.billboard} />
                 <div className="px-4 sm:px-6 lg:px-8 pb-24">
                     <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-                        {/* <MobileFilters sizes={sizes} colors={colors} /> */}
+                        <MobileFilters sizes={sizes} colors={colors} />
                         <div className="hidden lg:block">
                             <Filter
                                 valueKey="sizeId"
