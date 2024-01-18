@@ -22,6 +22,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
         <div>
             <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
             <div className="mt-3 flex items-end justify-between">
+                {/*Prices should be in XOF not $ OR EUROS*/}
                 <p className="text-2xl text-gray-900">
                     <Currency value={data?.price} />
                 </p>
@@ -29,6 +30,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
             <hr className="my-4" />
             <div className="flex flex-col gap-y-6">
                 <div className="flex items-center gap-x-4">
+                    {/* Sizes here should be a list of all available sizes from wich the client can choose from and gets attached to his order on the admin side*/}
                     <h3 className="font-semibold text-black">Size:</h3>
                     <div>
                         {data?.size?.value}

@@ -5,7 +5,8 @@ import Container from "@/components/ui/container";
 import Gallery from "@/components/ui/gallery";
 import Info from "@/components/info";
 
-
+// This page.tsx file  is server side bc it got async functions and needs to retrieve data from the db.
+// It does all the requiered server side computations then loads the client side components in it with the requiered data passed as props
 interface ProductPageProps {
     params: {
         productId: string;
@@ -16,6 +17,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
     const product = await getProduct(params.productId)
 
+    // We retrieve all the products of the same category for the ProductList components
     const suggestedProducts = await getProducts({ categoryId: product?.category?.id })
 
 

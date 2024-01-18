@@ -8,8 +8,13 @@ export const revalidate = 0;
 
 const HomePage = async () => {
 
-    const billboard = await getBillboard("690a3c8c-4785-4574-ac4b-c7d6bd079ffb")
+    // POINT D'ENTRE OU IL FAUT GENERER UNE DIFFERENTE BOUTIQUE/NOM DE DOMAINE
+    // 1- IDENTIDIER LA BOUTIQUE EN QUESTION
+    // 2- RECUPERER LES DONNEES DE LA BOUTIQUE EN QUESTION { BILLBOARD + PRODUITS } 
+
+    const billboard = await getBillboard("d59529b7-1e56-4302-94e3-1aa7a54ba47c")
     const products = await getProducts({ isFeatured: true })
+
     return (
         <Container>
             <div className="space-y-10 pb-10">
