@@ -2,7 +2,8 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+
 
 // form importssssssss -------------------------------------------------------//////
 import * as z from "zod"
@@ -32,12 +33,13 @@ import { toast } from "react-hot-toast";
 
 
 
-
 const Summary = () => {
+    
     const searchParams = useSearchParams();
     const items = useCart((state) => state.items);
     const removeAll = useCart((state) => state.removeAll);
 
+    const router = useRouter();
     useEffect(() => {
         if (searchParams.get('success')) {
             toast.success('Payment completed.');
@@ -53,7 +55,7 @@ const Summary = () => {
         return total + Number(item.price)
     }, 0);
 
-  
+
     // fommmmmmmssssss bnlleshitttttttt hereeeeeeeeeee\// validation object using zod
     const formSchema = z.object({
         name: z.string().min(1),
@@ -75,14 +77,15 @@ const Summary = () => {
             data
         });
 
-       if ( response.status == 200) {
-        window.location.assign(`http://localhost:3001/`);
-       }
+        if (response.status === 200) {
+            router.push('http://localhost:3001/')
+        }
+
     }
 
     //-------------------------------------------------------------------------------
     return (<>
-    
+
         <div
             className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
         >
@@ -100,11 +103,11 @@ const Summary = () => {
                     <FormField
                         control={form.control}
                         name="name"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel> Nom complet </FormLabel>
                                 <FormControl>
-                                    <Input type="string" placeholder="Entre ton nom au complet" {...field} value={field.value}  />
+                                    <Input type="string" placeholder="Entre ton nom au complet" {...field} value={field.value} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -113,7 +116,7 @@ const Summary = () => {
                     <FormField
                         control={form.control}
                         name="address"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel> Adresse de livraison </FormLabel>
                                 <FormControl>
@@ -126,7 +129,7 @@ const Summary = () => {
                     <FormField
                         control={form.control}
                         name="phone"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel> Numero de telephone </FormLabel>
                                 <FormControl>
@@ -139,7 +142,7 @@ const Summary = () => {
                     <FormField
                         control={form.control}
                         name="email"
-                        render={({field}) => (
+                        render={({ field }) => (
                             <FormItem>
                                 <FormLabel> Adresse courriel </FormLabel>
                                 <FormControl>
@@ -157,7 +160,7 @@ const Summary = () => {
             </Form>
 
         </div>
-        </>
+    </>
     );
 }
 
