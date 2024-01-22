@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-
 // form importssssssss -------------------------------------------------------//////
 import * as z from "zod"
 import { useForm } from "react-hook-form";
@@ -34,12 +33,13 @@ import { toast } from "react-hot-toast";
 
 
 const Summary = () => {
-    
+
     const searchParams = useSearchParams();
     const items = useCart((state) => state.items);
     const removeAll = useCart((state) => state.removeAll);
 
     const router = useRouter();
+
     useEffect(() => {
         if (searchParams.get('success')) {
             toast.success('Payment completed.');
@@ -72,16 +72,30 @@ const Summary = () => {
     });
 
     const onCheckout = async (data: OrderFormValues) => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
-            productIds: items.map((item) => item.id),
-            data
-        });
 
-        if (response.status === 200) {
-            router.push('http://localhost:3001/')
+        const productIds = items.map((item) => item.id);
+
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productIds: productIds,
+                    data
+                }),
+            });
+
+            if (response.ok) {
+                router.push(`${process.env.NEXT_PUBLIC_API_URL}`);
+            } else {
+                console.error('Error during checkout:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error during checkout:', error);
         }
-
-    }
+    };
 
     //-------------------------------------------------------------------------------
     return (<>
