@@ -4,9 +4,14 @@ import ProductList from "@/components/ui/product/product-list";
 import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
 
+import { useRouter } from 'next/router';
 export const revalidate = 0;
 
 const HomePage = async () => {
+
+    const router = useRouter();
+    // Access the store parameter from the query
+    const { store } = router.query;
 
     // POINT D'ENTRE OU IL FAUT GENERER UNE DIFFERENTE BOUTIQUE/NOM DE DOMAINE
     // 1- IDENTIDIER LA BOUTIQUE EN QUESTION
@@ -15,6 +20,7 @@ const HomePage = async () => {
     const billboard = await getBillboard("d59529b7-1e56-4302-94e3-1aa7a54ba47c")
     const products = await getProducts({ isFeatured: true })
 
+    console.log(store)
     return (
         <Container>
             <div className="space-y-10 pb-10">
