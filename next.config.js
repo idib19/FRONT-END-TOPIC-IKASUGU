@@ -6,7 +6,7 @@ module.exports = {
         return [
           {
             source: '/:store*',
-            destination: '/localhost:3001', // The :path parameter isn't used here so will be automatically passed in the query
+            destination: '/', // The :path parameter isn't used here so will be automatically passed in the query
           },
         ]
       },
