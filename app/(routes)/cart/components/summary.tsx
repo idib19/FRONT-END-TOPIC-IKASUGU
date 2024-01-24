@@ -90,9 +90,8 @@ const Summary = () => {
 
             if (response.ok) {
                 removeAll();
-                toast.success('Payment completed.');
+                toast.success('Commande effectuée avec succès');
                 router.push(`${process.env.NEXT_PUBLIC_STORE_URL}`)
-                console.log('redirecting to :' + `${process.env.NEXT_PUBLIC_STORE_URL}`)
             } else {
                 console.error('Error during checkout:', response.statusText);
             }
