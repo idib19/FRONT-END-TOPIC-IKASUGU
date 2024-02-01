@@ -90,7 +90,7 @@ const Summary = () => {
 
             if (response.ok) {
                 removeAll();
-                toast.success('Commande effectuée avec succès');
+                toast.success('Commande effectuée avec succès!');
                 router.push(`${process.env.NEXT_PUBLIC_STORE_URL}`)
             } else {
                 console.error('Error during checkout:', response.statusText);
