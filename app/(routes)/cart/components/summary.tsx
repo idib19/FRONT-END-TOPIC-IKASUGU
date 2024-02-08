@@ -75,7 +75,7 @@ const Summary = () => {
         const productIds = items.map((item) => item.id);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
