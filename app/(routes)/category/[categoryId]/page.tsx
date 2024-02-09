@@ -9,10 +9,10 @@ import getSizes from "@/actions/get-sizes";
 // Useful components import 
 import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
-import Filter from "./components/filter";
+import Filter from "@/components/product/components/filter"
 import ProductCard from "@/components/ui/product/product-card";
 import NoResults from "@/components/ui/no-results";
-import MobileFilters from "./components/mobile-filters";
+import MobileFilters from "@/components/product/components/mobile-filters";
 
 export const revalidate = 0;
 
