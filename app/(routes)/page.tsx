@@ -4,12 +4,18 @@ import ProductList from "@/components/ui/product/product-list";
 import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
 
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
 const HomePage = async () => {
 
-    
+    const {userId} = auth();
+
+    if (!userId) {
+        redirect('/sign-in')
+    }
     
 
     // POINT D'ENTRE OU IL FAUT GENERER UNE DIFFERENTE BOUTIQUE/NOM DE DOMAINE
