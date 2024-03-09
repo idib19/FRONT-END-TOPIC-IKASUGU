@@ -72,6 +72,10 @@ const Summary = () => {
 
     const onCheckout = async (data: OrderFormValues) => {
 
+  
+  
+
+
         const productIds = items.map((item) => item.id);
 
         try {
