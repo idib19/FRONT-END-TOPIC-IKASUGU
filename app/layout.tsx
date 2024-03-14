@@ -32,6 +32,7 @@ export default function RootLayout({
           <ModalProvider />
           
           {children}
+          
           <Footer />
 
         </body>

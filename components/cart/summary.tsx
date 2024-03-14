@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+
+import { auth } from "@clerk/nextjs";
 
 // form importssssssss -------------------------------------------------------//////
 import * as z from "zod"
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
     Form,
@@ -26,18 +28,24 @@ import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import { toast } from "react-hot-toast";
 
+import { AlertModal } from "@/components/login-alert-modal";
 
 
 
 
+const Summary = ( data : any ) => {
 
-const Summary = () => {
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
     const searchParams = useSearchParams();
     const items = useCart((state) => state.items);
     const removeAll = useCart((state) => state.removeAll);
 
     const router = useRouter();
+
+    const userId = data.userId
 
     useEffect(() => {
         if (searchParams.get('success')) {
@@ -55,7 +63,7 @@ const Summary = () => {
     }, 0);
 
 
-    // fommmmmmmssssss bnlleshitttttttt hereeeeeeeeeee\// validation object using zod
+    // fommmmmmmssssss bulleshitttttttt hereeeeeeeeeee\// validation object using zod
     const formSchema = z.object({
         name: z.string().min(1),
         address: z.string().min(1),
@@ -71,119 +79,137 @@ const Summary = () => {
     });
 
     const onCheckout = async (data: OrderFormValues) => {
+        
+        console.log(userId);
+        
+        if (userId) {
+            const productIds = items.map((item) => item.id);
 
-  
-  
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        productIds: productIds,
+                        data,
+                        clientId: userId
+                    }),
 
 
-        const productIds = items.map((item) => item.id);
+                });
 
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    productIds: productIds,
-                    data
-                }),
+                if (response.ok) {
+                    removeAll();
+                    toast.success('Commande effectuée avec succès!');
+                    router.push(`${process.env.NEXT_PUBLIC_STORE_URL}`)
+                } else {
+                    console.error('Error during checkout:', response.statusText);
+                }
 
 
-            });
-
-            if (response.ok) {
-                removeAll();
-                toast.success('Commande effectuée avec succès!');
-                router.push(`${process.env.NEXT_PUBLIC_STORE_URL}`)
-            } else {
-                console.error('Error during checkout:', response.statusText);
+            } catch (error) {
+                console.error('Error during checkout:', error);
             }
-
-
-        } catch (error) {
-            console.error('Error during checkout:', error);
         }
+
+        else {
+            setOpen(true)
+        }
+
     };
+
+    const redirectToLogin = () => {
+        setLoading(true);
+        router.push('/sign-in')
+    }
 
     //-------------------------------------------------------------------------------
     return (
-
-        <div
-            className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
-        >
-            <h2 className="text-lg font-medium text-gray-900">
-                Details de la commande
-            </h2>
-            <div className="mt-6 space-y-4">
-                <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                    <div className="text-xl font-medium text-gray-900">Total</div>
-                    <Currency value={totalPrice} />
+        <>
+            <AlertModal
+                isOpen={open}
+                onClose={() => setOpen(false)}
+                onConfirm={redirectToLogin}
+                loading={loading}
+            />
+            <div
+                className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
+            >
+                <h2 className="text-lg font-medium text-gray-900">
+                    Details de la commande
+                </h2>
+                <div className="mt-6 space-y-4">
+                    <div className="flex items-center justify-between border-t border-gray-200 pt-4">
+                        <div className="text-xl font-medium text-gray-900">Total</div>
+                        <Currency value={totalPrice} />
+                    </div>
                 </div>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onCheckout)} className="space-y-4">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> Nom complet </FormLabel>
+                                    <FormControl>
+                                        <Input type="string" placeholder="Entre ton nom au complet" {...field} value={field.value} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="address"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> Adresse de livraison </FormLabel>
+                                    <FormControl>
+                                        <Input type="string" placeholder="Entre ton adresse" {...field} value={field.value} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> Numero de telephone </FormLabel>
+                                    <FormControl>
+                                        <Input type="string"   {...field} value={field.value} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="email"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel> Adresse courriel </FormLabel>
+                                    <FormControl>
+                                        <Input type="email" placeholder="Entre ton courriel"  {...field} value={field.value} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <Button type="submit" disabled={items.length === 0} className="w-full mt-6">
+                            Commander
+                        </Button>
+                    </form>
+
+                </Form>
+
             </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onCheckout)} className="space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel> Nom complet </FormLabel>
-                                <FormControl>
-                                    <Input type="string" placeholder="Entre ton nom au complet" {...field} value={field.value} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="address"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel> Adresse de livraison </FormLabel>
-                                <FormControl>
-                                    <Input type="string" placeholder="Entre ton adresse" {...field} value={field.value} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel> Numero de telephone </FormLabel>
-                                <FormControl>
-                                    <Input type="string"   {...field} value={field.value} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel> Adresse courriel </FormLabel>
-                                <FormControl>
-                                    <Input type="email" placeholder="Entre ton courriel"  {...field} value={field.value} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit" disabled={items.length === 0} className="w-full mt-6">
-                        Commander
-                    </Button>
-                </form>
 
-            </Form>
-
-        </div>
-
+        </>
     );
 }
 

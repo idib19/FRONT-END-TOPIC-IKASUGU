@@ -12,11 +12,11 @@ export const revalidate = 0;
 
 const HomePage = async () => {
 
-    const {userId} = auth();
+    // const {userId} = auth();
     
-    if (!userId) {
-        redirect('/sign-in')
-    }
+    // if (!userId) {
+    //     redirect('/sign-in')
+    // }
     
 
     // POINT D'ENTRE OU IL FAUT GENERER UNE DIFFERENTE BOUTIQUE/NOM DE DOMAINE

@@ -29,9 +29,10 @@ const ProductCard: React.FC<ProductCard> = ({
     };
 
     const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.stopPropagation();
 
+        event.stopPropagation();
         previewModal.onOpen(data);
+        
     };
 
     const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
