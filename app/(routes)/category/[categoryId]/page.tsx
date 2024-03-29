@@ -39,11 +39,20 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params, searchParams 
     const sizes = await getSizes();
     const colors = await getColors();
 
+    const billboard = {
+        id: '9da5263d-e533-4202-9351-296886355c74',
+        storeId: '5601a131-affb-4108-9135-38450c4918d0',
+        label: 'BILLBAORD TEST',
+        imageUrl: 'https://res.cloudinary.com/dvnpzsb2v/image/upload/v1710485550/so2pype57ktesvcu23mt.png',
+        createdAt: '2024-03-15T06:52:41.361Z',
+        updatedAt: '2024-03-15T06:52:41.361Z'
+      }
+   
     return (
         <div className="bg-white">
             <Container>
 
-                <Billboard data={category.billboard} />
+                <Billboard data={billboard} />
                 <div className="px-4 sm:px-6 lg:px-8 pb-24">
                     <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
                         <MobileFilters sizes={sizes} colors={colors} />
@@ -62,7 +71,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params, searchParams 
                         <div className="mt-6 lg:col-span-4 lg:mt-0">
                             {products.length === 0 && <NoResults />}
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                {products.map((item) => (
+                                {products.map((item : any) => (
                                     <ProductCard key={item.id} data={item} />
                                 ))}
                             </div>

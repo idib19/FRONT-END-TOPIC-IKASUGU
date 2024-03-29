@@ -32,18 +32,16 @@ export const AlertModal: React.FC<AlertModalProps> = ({
 
     return (
         <Modal
-            title="Connexion requise"
-            description="Connectez-vous ou créez un compte pour passer une commande"
+            title="FEATURE DEACTIVATED "
+            description=" You can't use this feature"
             isOpen={isOpen}
             onClose={onClose}
         >
 
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                <Button disabled={loading} variant="outline" onClick={onConfirm}>
-                    Connexion
-                </Button>
+    
                 <Button disabled={loading} variant="destructive" onClick={onClose}>
-                    Annuler
+                    Close
                 </Button>
             </div>
         </Modal>

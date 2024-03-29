@@ -48,14 +48,16 @@ const Summary = ( data : any ) => {
     const userId = data.userId
 
     useEffect(() => {
-        if (searchParams.get('success')) {
-            toast.success('Payment completed.');
-            removeAll();
-        }
+        console.log( "user :  ", userId);
 
-        if (searchParams.get('canceled')) {
-            toast.error('Something went wrong.');
-        }
+        // if (searchParams.get('success')) {
+        //     toast.success('Payment completed.');
+        //     removeAll();
+        // }
+
+        // if (searchParams.get('canceled')) {
+        //     toast.error('Something went wrong.');
+        // }
     }, [searchParams, removeAll]);
 
     const totalPrice = items.reduce((total, item) => {
@@ -80,43 +82,8 @@ const Summary = ( data : any ) => {
 
     const onCheckout = async (data: OrderFormValues) => {
         
-        console.log(userId);
-        
-        if (userId) {
-            const productIds = items.map((item) => item.id);
-
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/checkoutEmail`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        productIds: productIds,
-                        data,
-                        clientId: userId
-                    }),
-
-
-                });
-
-                if (response.ok) {
-                    removeAll();
-                    toast.success('Commande effectuée avec succès!');
-                    router.push(`${process.env.NEXT_PUBLIC_STORE_URL}`)
-                } else {
-                    console.error('Error during checkout:', response.statusText);
-                }
-
-
-            } catch (error) {
-                console.error('Error during checkout:', error);
-            }
-        }
-
-        else {
             setOpen(true)
-        }
+        
 
     };
 
@@ -155,7 +122,7 @@ const Summary = ( data : any ) => {
                                 <FormItem>
                                     <FormLabel> Nom complet </FormLabel>
                                     <FormControl>
-                                        <Input type="string" placeholder="Entre ton nom au complet" {...field} value={field.value} />
+                                        <Input type="string" placeholder="Nom complet" {...field} value={field.value} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -168,7 +135,7 @@ const Summary = ( data : any ) => {
                                 <FormItem>
                                     <FormLabel> Adresse de livraison </FormLabel>
                                     <FormControl>
-                                        <Input type="string" placeholder="Entre ton adresse" {...field} value={field.value} />
+                                        <Input type="string" placeholder="Adresse" {...field} value={field.value} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -179,9 +146,9 @@ const Summary = ( data : any ) => {
                             name="phone"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel> Numero de telephone </FormLabel>
+                                    <FormLabel> Numéro de téléphone </FormLabel>
                                     <FormControl>
-                                        <Input type="string"   {...field} value={field.value} />
+                                        <Input type="string" placeholder="+1 (999) 9999 9999" {...field} value={field.value} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -194,7 +161,7 @@ const Summary = ( data : any ) => {
                                 <FormItem>
                                     <FormLabel> Adresse courriel </FormLabel>
                                     <FormControl>
-                                        <Input type="email" placeholder="Entre ton courriel"  {...field} value={field.value} />
+                                        <Input type="email" placeholder="Courriel"  {...field} value={field.value} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

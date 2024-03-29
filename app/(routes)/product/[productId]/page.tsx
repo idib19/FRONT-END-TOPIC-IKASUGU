@@ -20,7 +20,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
     // We retrieve all the products of the same category for the ProductList components
     const suggestedProducts = await getProducts({ categoryId: product?.category?.id })
 
-
+    
     return (
         <div className="bg-white">
             <Container>

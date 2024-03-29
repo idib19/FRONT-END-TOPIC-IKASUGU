@@ -1,7 +1,8 @@
 import { Product } from "@/types";
 import qs from "query-string";
+import { products } from "@/lib/statics";
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
+const URL = ``;
 
 interface Query {
     categoryId?: string;
@@ -10,7 +11,7 @@ interface Query {
     isFeatured?: boolean;
 }
 
-const getProducts = async (query: Query): Promise<Product[]> => {
+const getProducts = async (query: Query): Promise<any> => {
     const url = qs.stringifyUrl({
         url: URL,
         query: {
@@ -21,9 +22,11 @@ const getProducts = async (query: Query): Promise<Product[]> => {
         },
     });
 
-    const res = await fetch(url);
 
-    return res.json();
+    return products
 };
 
 export default getProducts;
+
+
+  

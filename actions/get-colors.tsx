@@ -1,11 +1,10 @@
 import { Color } from "@/types";
-
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/colors`;
+import { colors } from "@/lib/statics";
+const URL = ``;
 
 const getColors = async (): Promise<Color[]> => {
-    const res = await fetch(URL);
 
-    return res.json();
+    return colors;
 };
 
 export default getColors;

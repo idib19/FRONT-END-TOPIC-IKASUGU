@@ -16,7 +16,6 @@ interface ProductCard {
 }
 
 
-
 const ProductCard: React.FC<ProductCard> = ({
     data
 }) => {
