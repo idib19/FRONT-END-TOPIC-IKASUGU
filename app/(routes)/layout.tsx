@@ -1,3 +1,4 @@
+import BottomBar from "@/components/ui/Layout/BottomBar"
 import Navbar from "@/components/ui/navbar/navbar"
 
 export default function StoreLayout ({
@@ -9,6 +10,7 @@ export default function StoreLayout ({
         <>
         <Navbar />
         {children}
+        <BottomBar/>
         </>
         )
         
