@@ -63,6 +63,7 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                     >
                         <MainNav data={categories} />
                         <NavbarActions />
+                        
                     </div>
 
                 </div>
