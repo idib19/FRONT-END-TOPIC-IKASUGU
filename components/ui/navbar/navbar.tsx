@@ -57,14 +57,15 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                         </svg>
                     </button>
                     <div
-                        className={`lg:flex flex-grow ${
-                            isDrawerOpen ? "block bg-white z-10  text-black justify-center items-center absolute  top-20 py-4 w-60 " : "hidden "
+                        className={`lg:flex flex-grow  ${
+                            isDrawerOpen ? "block bg-white z-10  text-black justify-center items-center absolute  top-20 py-4 w-60 " : "hidden relative"
                         }`}
                     >
                         <MainNav data={categories} />
-                        <NavbarActions />
                         
+
                     </div>
+                    <NavbarActions />
 
                 </div>
             </Container>
