@@ -4,6 +4,8 @@ import { ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaGithub } from 'react-icons/fa';
+import { FiPackage } from "react-icons/fi";
+import { BsCart } from "react-icons/bs";
 import Button from "@/components/ui/button";
 import useCart from "@/hooks/use-cart";
 
@@ -24,12 +26,18 @@ const NavbarActions = () => {
     return (
         <div className="  flex  ml-auto">
             <div className=" my-3  px-2   ">
-                <FaGithub size={32} color="black" />
+                <button>
+                    <FiPackage size={32} color="black" />
+                </button>
+
             </div>
             <div className=" my-3  px-2  ">
-                <FaGithub size={32} color="black" />
+                <button>
+                    <BsCart size={32} color="black" />
+                </button>
+
             </div>
-            <div className=" ml-auto  my-2 mx-8 ">
+            <div className=" ml-auto  my-2 mx-4 ">
 
                 <Button onClick={() => router.push('/cart')} className="flex items-center rounded-full bg-black py-2 px-2">
                     <ShoppingBag

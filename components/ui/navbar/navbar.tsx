@@ -28,7 +28,7 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                     <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
                         <p className="font-bold text-xl"> BOUTIQUE </p>
                     </Link>
-                    <button
+                    {/* <button
                         onClick={toggleDrawer}
                         className="lg:hidden absolute right-4 top-1/2 transform -translate-y-1/2 focus:outline-none "
                     >
@@ -55,7 +55,7 @@ const Navbar = ({ categories }: { categories: Category[] }) => {
                                 />
                             )}
                         </svg>
-                    </button>
+                    </button> */}
                     <div
                         className={`lg:flex flex-grow  ${
                             isDrawerOpen ? "block bg-white z-10  text-black justify-center items-center absolute  top-20 py-4 w-60 " : "hidden relative"
